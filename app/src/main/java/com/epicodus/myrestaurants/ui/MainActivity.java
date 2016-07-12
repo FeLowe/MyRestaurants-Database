@@ -26,44 +26,40 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
+//    private SharedPreferences mSharedPreferences;
+//    private SharedPreferences.Editor mEditor;
+//
+//    private DatabaseReference mSearchedLocationReference;
+//    private ValueEventListener mSearchedLocationReferenceListener;
 
-    private DatabaseReference mSearchedLocationReference;
-    private ValueEventListener mSearchedLocationReferenceListener;
-
-    @Bind(R.id.findRestaurantsButton)
-    Button mFindRestaurantsButton;
-    @Bind(R.id.locationEditText)
-    EditText mLocationEditText;
-    @Bind(R.id.myRestaurants)
-    TextView mAppNameTextView;
-    @Bind(R.id.savedRestaurantsButton)
-    Button mSavedRestaurantsButton;
+    @Bind(R.id.findRestaurantsButton) Button mFindRestaurantsButton;
+//    @Bind(R.id.locationEditText) EditText mLocationEditText;
+    @Bind(R.id.myRestaurants) TextView mAppNameTextView;
+    @Bind(R.id.savedRestaurantsButton) Button mSavedRestaurantsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //
-        mSearchedLocationReference = FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child(Constants.FIREBASE_CHILD_SEARCHED_LOCATION);
-
-        mSearchedLocationReferenceListener = mSearchedLocationReference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
-                    String location = locationSnapshot.getValue().toString();
-                    Log.d("Locations updated", "location: " + location);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        mSearchedLocationReference = FirebaseDatabase
+//                .getInstance()
+//                .getReference()
+//                .child(Constants.FIREBASE_CHILD_SEARCHED_LOCATION);
+//
+//        mSearchedLocationReferenceListener = mSearchedLocationReference.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
+//                    String location = locationSnapshot.getValue().toString();
+//                    Log.d("Locations updated", "location: " + location);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
         super.onCreate(savedInstanceState);
@@ -73,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Typeface ostrichFont = Typeface.createFromAsset(getAssets(), "fonts/ostrich-regular.ttf");
 
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor = mSharedPreferences.edit();
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mEditor = mSharedPreferences.edit();
 
         mAppNameTextView.setTypeface(ostrichFont);
 
@@ -85,16 +81,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == mFindRestaurantsButton) {
-            String location = mLocationEditText.getText().toString();
+//            String location = mLocationEditText.getText().toString();
 
-            saveLocationToFirebase(location);
-            if(!(location).equals("")) {
-                addToSharedPreferences(location);
-            }else if ((location).equals("")) {
-
-            }
+//            saveLocationToFirebase(location);
+//            if(!(location).equals("")) {
+//                addToSharedPreferences(location);
+//            }else if ((location).equals("")) {
+//
+//            }
             Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
-            intent.putExtra("location", location);
+//            intent.putExtra("location", location);
             startActivity(intent);
         }
         if (v == mSavedRestaurantsButton) {
@@ -103,17 +99,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-        private void addToSharedPreferences(String location) {
-        mEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
-    }
-    private void saveLocationToFirebase(String location) {
-//        Firebase searchedLocationRef = new Firebase(Constants.FIREBASE_URL_SEARCHED_LOCATION);
-        mSearchedLocationReference.push().setValue(location);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mSearchedLocationReference.removeEventListener(mSearchedLocationReferenceListener);
-    }
+//        private void addToSharedPreferences(String location) {
+//        mEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
+//    }
+//    private void saveLocationToFirebase(String location) {
+//        mSearchedLocationReference.push().setValue(location);
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mSearchedLocationReference.removeEventListener(mSearchedLocationReferenceListener);
+//    }
 }
